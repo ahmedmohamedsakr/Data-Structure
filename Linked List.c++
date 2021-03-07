@@ -31,19 +31,19 @@ int main() {
     insertNode(25);
     display();
     deleteNode(25);
-    cout<<"delete 25:\n";
+    cout << "delete 25:\n";
     display();
     deleteBeginning();
-    cout<<"delete beginning:\n";
+    cout << "delete beginning:\n";
     display();
     insertBeginning(4);
-    cout<<"insert 4 at beginning:\n";
+    cout << "insert 4 at beginning:\n";
     display();
     insertNode(25);
-    cout<<"insert 25 at end:\n";
+    cout << "insert 25 at end:\n";
     display();
     deleteEnd();
-    cout<<"delete end:\n";
+    cout << "delete end:\n";
     display();
     return 0;
 }
@@ -115,19 +115,19 @@ void deleteBeginning() {
 }
 
 void deleteEnd() {
-    node* ptr;
-    if(head==nullptr){     //linked list is empty.
-        cout<<"empty linked list is empty.\n";
-    }else if(head->next == nullptr){  //linked list has only one node.
+    node *ptr;
+    if (head == nullptr) {     //linked list is empty.
+        cout << "empty linked list is empty.\n";
+    } else if (head->next == nullptr) {  //linked list has only one node.
         delete head;
-        head=nullptr;
-    }else{        //liked list has more than one node.
-        ptr=head;
+        head = nullptr;
+    } else {        //liked list has more than one node.
+        ptr = head;
         //while the next of the Node after me not equal nullptr.
-        while(ptr->next->next!=nullptr){
-            ptr=ptr->next;  //stop at the Node directly before the last Node.
+        while (ptr->next->next != nullptr) {
+            ptr = ptr->next;  //stop at the Node directly before the last Node.
         }
         delete ptr->next; //last Node.
-        ptr->next=nullptr;
+        ptr->next = nullptr;
     }
 }
