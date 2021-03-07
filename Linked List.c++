@@ -12,6 +12,7 @@ struct node {
 };
 
 node *head = nullptr;
+node *preLast = nullptr;
 
 void insertNode(int value);
 
@@ -29,42 +30,60 @@ int main() {
     insertNode(4);
     insertNode(8);
     insertNode(25);
-    display();
+    display();                    //{4,8,25}
     deleteNode(25);
     cout << "delete 25:\n";
-    display();
+    display();                    //{4,8}
     deleteBeginning();
     cout << "delete beginning:\n";
-    display();
+    display();                    //{8}
     insertBeginning(4);
     cout << "insert 4 at beginning:\n";
-    display();
+    display();                   //{4,8}
     insertNode(25);
     cout << "insert 25 at end:\n";
-    display();
+    display();                  //{4,8,25}
+    insertNode(30);
+    cout << "insert 30 at end:\n";
+    display();                 //{4,8,25,30}
     deleteEnd();
     cout << "delete end:\n";
-    display();
+    display();                //{4,8,25}
     return 0;
 }
 
-//insert from the end of the linked list.
+//insert node from the end of the linked list at time complexity: O(1).
 void insertNode(int value) {
-    node *newNode, *last;
+    node *newNode;
     newNode = new node;
     newNode->data = value;
-    if (head == nullptr) {                 //if there is no node.
+    if (head == nullptr) {                //if there is no node.
         head = newNode;
+        preLast = head;
     } else {
-        last = head;
-        while (last->next != nullptr) {
-            last = last->next;
-        }
-        last->next = newNode;
+        //This condition to check if there is more than one node to start moving preLast pointer.
+        if (preLast->next != nullptr)preLast = preLast->next;
+        preLast->next = newNode;
     }
     newNode->next = nullptr;
 }
 
+//insert node from the end of the linked list at time complexity: O(n).
+//void insertNode(int value) {
+//    node *newNode, *last;
+//    newNode = new node;
+//    newNode->data = value;
+//    if (head == nullptr) {                 //if there is no node.
+//        head = newNode;
+//    } else {
+//        last = head;
+//        while (last->next != nullptr) {
+//            last = last->next;
+//        }
+//        last->next = newNode;
+//    }
+//    newNode->next = nullptr;
+//}
 void display() {
     node *currentNode;
     if (head == nullptr) {
@@ -120,6 +139,7 @@ void deleteEnd() {
         cout << "empty linked list is empty.\n";
     } else if (head->next == nullptr) {  //linked list has only one node.
         delete head;
+        delete preLast;
         head = nullptr;
     } else {        //liked list has more than one node.
         ptr = head;
@@ -127,7 +147,7 @@ void deleteEnd() {
         while (ptr->next->next != nullptr) {
             ptr = ptr->next;  //stop at the Node directly before the last Node.
         }
-        delete ptr->next; //last Node.
+        delete preLast->next; //last Node.
         ptr->next = nullptr;
     }
 }
