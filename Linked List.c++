@@ -26,6 +26,10 @@ void deleteBeginning();
 
 void deleteEnd();
 
+void Reverse();
+
+void RecursiveReverse(node *p);
+
 int main() {
     insertNode(4);
     insertNode(8);
@@ -49,6 +53,12 @@ int main() {
     deleteEnd();
     cout << "delete end:\n";
     display();                //{4,8,25}
+    cout << "after reverse:\n";
+    Reverse();
+    display();                //{25,8,4}
+    cout << "after recursive reverse:\n";
+    RecursiveReverse(head);
+    display();               //{4,8,25}
     return 0;
 }
 
@@ -97,6 +107,13 @@ void display() {
     }
     puts("");
 }
+
+//using recursion to print the elements of the linked list.
+//void recursiveDisplay(node *currentNode){
+//         if(currentNode==nullptr)return;
+//         cout<<currentNode->data<<" ";
+//         recursiveDisplay(currentNode->next);
+//}
 
 void deleteNode(int value) {
     node *current = head, *previous = head;
@@ -150,4 +167,27 @@ void deleteEnd() {
         delete preLast->next; //last Node.
         ptr->next = nullptr;
     }
+}
+
+void Reverse() {
+    node *previous, *current, *next;
+    current = head;
+    previous = nullptr;
+    while (current != nullptr) {
+        next = current->next;
+        current->next = previous;
+        previous = current;
+        current = next;
+    }
+    head = previous;
+}
+
+void RecursiveReverse(node *p) {
+    if (p->next == nullptr) {
+        head = p;
+        return;
+    }
+    RecursiveReverse(p->next);
+    p->next->next = p;
+    p->next = nullptr;
 }
